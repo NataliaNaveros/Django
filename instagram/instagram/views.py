@@ -1,9 +1,8 @@
 """Django"""
 from django.http import HttpResponse
 
-# def comentarios(request):
-
-# 	return HttpResponse('Comentarios')
+def comentario(request):
+ 	return HttpResponse('Comentarios')
 
 # def likes(request):
 	

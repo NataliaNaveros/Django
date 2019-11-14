@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block head_contend %}
+<title>Publicaiones</title>
+{% endblock %}
+
+{% block container %}
+<div class="row">
+	{% for noticia in publicaciones %}
+	<div class="col-lg-4 offset-lg-4">
+		<div class="media">
+			<img src="{{ noticia.usuario.foto }}" alt="{{ noticia.usuario.nombre }}" class="mr-3 rounded-circle">
+			<div class="media-body">
+				<h5 class="mt-0">
+					{{ noticia.usuario.nombre }}
+				</h5>
+				{{ noticia.timestamp }}		
+			</div>
+		</div>
+		<img src="{{ noticia.imagen }}" alt="{{ noticia.title }}" class="img-fluid mt-3 border rounded" width="100%">
+		<h6 class="ml-1 mt-1">
+			{{ noticia.titulo }}
+		</h6>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
