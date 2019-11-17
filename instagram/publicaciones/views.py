@@ -34,6 +34,6 @@ noticias = [
 		'imagen': 'http://www.eltiempo.com/files/article_multimedia/uploads/2018/06/06/5b177c3b22c8e.jpeg',
 	},
 ]
-@login_required
+@login_required(redirect_field_name='login')
 def publicacion(request):
 	return render(request, 'publicaciones/publicaciones.html',{'publicaciones':noticias})

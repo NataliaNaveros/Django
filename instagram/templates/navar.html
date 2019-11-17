@@ -14,26 +14,8 @@
                 </a>
             </li>
         </ul>
-        <div class=" form-inline form-group col-md-7 ">
-            <div class="form-group">
-                <div class="input-group mb-2 my-lg-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="background: #FFF"><i class="fas fa-search"></i></span>
-                    </div>
-                    <input type="text" class="form-control" type="text" placeholder="Buscar">
-                    <div class="input-group-append">
-                        <span class="input-group-text" style="background: #FFF"><i class="fas fa-times"></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="col-md-8 ">
-            <form class="form-inline my-2 my-lg-3 justify-content-center">
-                <input class="form-control mr-sm-2" type="text" placeholder="Buscar" style="text-align: center;align-items: center;">
-            </form>
-        </div> -->
         <div>
-            <a href=""><i class="far fa-user fa-2x" style="color: black"></i></a>
+            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt fa-2x" style="color: #000000"></i></a>
         </div>
         
     </div>
