@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img src="{% static "img/instagram.jpg" %}" height="40" class="d-inline-block align-top"/>
+    <a class="navbar-brand" href="{% url 'instagram' %}">
+        <img src="{% static "images/instagram.jpg" %}" height="40" class="d-inline-block align-top"/>
     </a> 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,12 +10,23 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="#">
-                    <img src="{% static "img/nombre.jpg" %}" height="40" class="d-inline-block align-top"/>
+                    <img src="{% static "images/nombre.jpg" %}" height="40" class="d-inline-block align-top"/>
                 </a>
             </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <form action="{% url 'perfil' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="search" class="form-control form-control-sm" name="buscar" placeholder="Buscar...">
+                </form>
+            </li>
+        </ul>
         <div>
-            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt fa-2x" style="color: #000000"></i></a>
+            <a href="{% url 'perfil' %}" style="color: #000000;margin: 0 10px"><i class="far fa-user fa-2x"></i></a>
+        </div>
+        <div>
+            <a href="{% url 'cerrar_sesion' %}"><i class="fas fa-sign-out-alt fa-2x" style="color: #000000"></i></a>
         </div>
         
     </div>

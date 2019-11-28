@@ -1,5 +1,5 @@
 from django.contrib import admin
-from publicaciones.models import Publicacion
+from publicaciones.models import publicaciones
 # Register your models here.
 
-admin.site.register(Publicacion)
+admin.site.register(publicaciones)

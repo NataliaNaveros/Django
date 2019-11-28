@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block container %}
+<div class="container jumbotron row">
+	<div class="col-md-12 ">
+		<div class="col-md-10 offset-md-1">
+			<div class="row">
+				{% for dato in datos %}
+					<div class="col-md-4">
+						<div class="font-weight-bold" style="font-size: 14px; padding: 15px;">
+							<div class="profile-image">
+								{% if dato.imagen_perfil %}
+									<img src="{{ dato.imagen_perfil }}" width="150" height="150" style="object-fit: cover;  border-radius: 50%;">
+								{% else %}
+									<img src="{% static 'images/instagram.jpg' %}" width="150" height="150" style="object-fit: cover;  border-radius: 50%;">
+								{% endif %}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8"><br>
+						<span class="font-weight-bold" style="font-size: 20px;">
+							{% if dato.id == request.session.usuario_id %}
+								<div class="col-md-12">
+									{{ dato.usuario }}
+									<a class="btn btn-info" href="{% url 'perfil_subir' %}" style="margin-left: 10px;">Subir Publicaci&oacute;n</a>
+									<a class="btn btn-warning" href="{% url 'perfil_editar' %}" style="margin-left: 10px;">Editar Perfil</a>
+								</div>
+							{% else %}
+								<form action="{% url 'seguir' %}" method="POST">
+									{% csrf_token %}
+									{{ dato.usuario }}
+									<input type="hidden" name="id" value="{{ dato.id }}">
+									{% if siguiendo == 0 %}
+										<input type="submit" class="btn btn-sm btn-success" style="margin-left: 10px;" value="Seguir">
+									{% else %}
+										<input type="submit" class="btn btn-sm btn-info" style="margin-left: 10px;" value="Dejar de seguir">
+									{% endif %}
+								</form>
+							{% endif %}<br>
+						</span>
+						<span style="font-size: 16px;">
+							<b>{{ publicaciones }}</b>
+							{% if publicaciones == 1 %} Publicaci&oacute;n {% else %} Publicaciones {% endif %} |
+							<b>{{ seguidores }}</b>
+							{% if seguidores == 1 %} Seguidor {% else %} Seguidores {% endif %} |
+							<b>{{ seguidos }}</b>
+							{% if seguidos == 1 %} Seguido {% else %} Seguidos {% endif %}<br><br>
+							<b>{{ dato.nombre_completo }}</b>
+						</span>
+					</div>
+				{% endfor %}
+			</div><br>
+		</div>
+	</div>
+</div>
+<div class="col-md-12">
+	<div class="row">
+		{% for noticia in noticias %}
+			<div class="col-md-4" style="padding: 10px;">
+				<div class="card">
+					{% for dato in datos %}
+						{% if dato.id == request.session.usuario_id %}								
+							<form action="{% url 'borrar_publicaciones' %}" method="POST">
+								{% csrf_token %}
+								<input type="hidden" name="publicacion_id" value="{{ noticia.id }}">
+								<button type="submit" class="btn btn-sm btn-danger" style="font-size: 10px; position: absolute">
+									<i class="fa fa-trash"></i>
+								</button>
+							</form>
+											
+						{% endif %}
+					{% endfor %}
+					<img class="card-img-top" src="{{ noticia.imagen }}" width="293" height="293" style="object-fit: cover;">
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

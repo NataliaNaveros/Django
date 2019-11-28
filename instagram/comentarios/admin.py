@@ -1,5 +1,5 @@
 from django.contrib import admin
-from comentarios.models import Comentario
+from comentarios.models import comentarios
 # Register your models here.
 
-admin.site.register(Comentario)
+admin.site.register(comentarios)

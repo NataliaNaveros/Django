@@ -1,11 +1,17 @@
 from django.db import models
-from usuarios.models import Usuario
-from publicaciones.models import Publicacion
+from publicaciones.models import publicaciones
+from usuarios.models import usuarios 
+from datetime import datetime
 
-# Create your models here.
+class likes(models.Model):
+	usuario = models.ForeignKey(usuarios, on_delete=models.CASCADE)
+	publicacion = models.ForeignKey(publicaciones, on_delete=models.CASCADE)
 
-class Like(models.Model):
-	usuario_id = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-	publicacion_id = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
+	class Meta:
+		verbose_name = "Like"
+		verbose_name_plural = "Likes"
+	
+	def __str__(self):
+		return '{} dejo un me gusta a la publicacion de {}'.format(self.usuario.nombre_completo, self.publicacion.usuario.nombre_completo)
 
 		

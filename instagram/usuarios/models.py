@@ -1,13 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
-
+from datetime import datetime
 # Create your models here.
 
-class Usuario(models.Model):
-	user=models.OneToOneField(User, on_delete=models.CASCADE)
-	nombre = models.CharField(max_length=50)
-	apellido = models.CharField(max_length=50)
-	usuario = models.CharField(max_length=50, unique = True)
-	email = models.EmailField()
-	contrasena = models.CharField(max_length=50)
+class usuarios(models.Model):
+	usuario = models.CharField(max_length=255)
+	contrasena = models.CharField(max_length=255)
+	correo = models.CharField(max_length=255)
+	nombre_completo = models.CharField(max_length=255)
+	imagen_perfil = models.ImageField(upload_to='static/images/perfil', blank=True, null=True)
+	fecha_creacion = models.DateTimeField(auto_now_add=True)
+	class Meta:
+		verbose_name = "Usuario"
+		verbose_name_plural = "Usuarios"
+	def __str__(self):
+		return '{}'.format(self.nombre_completo)
 		

@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block head_content %}
+<title>@{{ usuario.usuario }} | Actualizar Perfil</title>
+{% endblock %}
+
+{% block container %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-6 p-4" id="profile-box">
+            <form action="{% url 'perfil_editar' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="media">
+                    {% if dato.image %}
+                        <img src="{{ dato.image.url }}" class="rounded-circle" height="50" />
+                    {% else %}
+                        <img src="{% static 'images/default-profile.png' %}" class="rounded-circle" height="50" />
+                    {% endif %}
+
+                    <div class="media-body">
+                        <h5 class="ml-4">@{{ usuarios.usuario }} | {{ usuarios.nombre_completo }}</h5>
+                        <p class="ml-4"><input type="file" name="imagen_perfil" ></p>
+                    </div>
+
+                </div>
+                {% for error in form.image.errors %}
+                <div class="alert alert-danger">
+                    <b>Foto: </b>{{ error }}
+                </div>
+                {% endfor %}
+                <hr><br>
+                <div>
+                    <input type="text" class="form-control form-control-sm" name="nombre_completo" value="{{ dato.nombre_completo }}" required="" placeholder="Nombre Completo">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-5">Actualizar Informaci&oacute;n</button>
+                <a href="{% url 'perfil' %}" class="btn btn-success btn-block mt-2">Regresar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- <div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-6 p-4" id="profile-box">
+            <h5 class="ml-4">@{{ request.user.username  }} | {{ user.get_full_name }}</h5>
+            </div>
+            <form action="{% url 'perfil_editar' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="media">
+                    {% if profile.foto %}
+                        <img src="{{ profile.foto.url }}" class="rounded-circle" height="50" />
+                    {% else %}
+                        <img src="{% static 'images/default-profile.png' %}" class="rounded-circle" height="50" />
+                    {% endif %}
+                    <div class="media-body">
+                        <h5 class="ml-4">@{{ user.username }} | {{ user.get_full_name }}</h5>
+                        <p class="ml-4"><input type="file" name="foto" ></p>
+                    </div>
+                    {% for error in form.foto.errors %}
+                <div class="alert alert-danger">
+                    <b>Foto: </b>{{ error }}
+                </div>
+                {% endfor %}
+                    {% for dato in datos %}
+                        <div class="form-group">
+                            <input  type="file" class="form-control form-control-sm" name="imagen_perfil" required="">
+                        </div>
+                        <div>
+                            <input type="text" class="form-control form-control-sm" name="nombre_completo" value="{{ dato.nombre_completo }}" required>
+                        </div>
+                    {% endfor %} 
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-5">Actualizar Informaci&oacute;n</button>             
+            </form>
+        </div>
+    </div>
+</div>
+ -->
+{% endblock %}

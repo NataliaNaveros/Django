@@ -1,3 +1,6 @@
 from django.contrib import admin
+from likes.models import likes
 
-# Register your models here.
+
+admin.site.register(likes)
+

@@ -3,24 +3,84 @@
 <title>Publicaiones</title>
 {% endblock %}
 {% block container %}
-<div class="row">
-	{% for noticia in publicaciones %}
-	<div class="col-lg-4 offset-lg-4">
-		<div class="media">
-			<img src="{{ noticia.usuario.foto }}" alt="{{ noticia.usuario.nombre }}" class="mr-3 rounded-circle">
-			<div class="media-body">
-				<h5 class="mt-0">
-					{{ noticia.usuario.nombre }}
-				</h5>
-				{{ noticia.timestamp }}		
-			</div>
-		</div>
-		<img src="{{ noticia.imagen }}" alt="{{ noticia.title }}" class="img-fluid mt-3 border rounded" width="100%">
-		<h6 class="ml-1 mt-1">
-			{{ noticia.titulo }}
-		</h6>
-	</div>
-	{% endfor %}
-</div>
 
-{% endblock %}
+<div class="row">
+	<div class="col-md-8">
+		{% for historia in historias %}
+			<img src="{{ historia.imagen }}" width="64" height="64" style="border-radius: 50%; object-fit: cover;">
+		{% endfor %}
+	</div>
+	<div class="col-lg-4 offset-lg-4">
+		{% for noticia in noticias %}
+		<div class="card">
+			<div class="font-weight-bold" style="font-size: 14px; padding: 15px;">
+				<form action="{% url 'perfil' %}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="buscar" value="{{ noticia.usuario.usuario }}">
+					
+				</form>
+			</div>
+			<div class="font-weight-bold" style="font-size: 14px; padding: 15px;">
+				<form action="{% url 'perfil' %}" method="POST">
+					{% csrf_token %}	
+					{% if noticia.usuario.imagen_perfil %}
+						<img src="{{ noticia.usuario.imagen_perfil }}" width="32" height="32" style="border-radius: 50%; object-fit: cover;">
+					{% endif %}
+					<a href="" name="id" style="color: #000; text-decoration: none; cursor: default;">{{ noticia.usuario.nombre_completo }}</a>
+				</form>
+			</div>
+			<img class="zoom card-img-top" src="{{ noticia.imagen }}" width="614" height="auto">
+			<div class="card-body" style="margin-top: -10px;">
+				<span>{{ noticia.usuario }} | {{ noticia.mensaje }}</span><br>
+				<div style="padding-top: 5px;">
+					<span><a href="{% url 'me_gusta' id=noticia.id %}" style="text-decoration: none; color: #000"><i class="far fa-heart" style="font-size: 1.5rem;"></i></a></span>
+					<span style="padding-left: 5px;">
+						<button id="comentario{{ noticia.id }}" style="background: none;border: none; padding: 0;cursor: pointer;font-weight: bold;">
+							<i class="far fa-comment-alt" style="font-size: 1.4rem;"></i>
+							<script type="text/javascript">
+								$(document).on("click", "#comentario{{ noticia.id }}", function(e){
+  									$(".comentario{{ noticia.id }}").filter(':visible').focus();
+								})
+							</script>
+						</button>
+					</span>
+					<span class="float-right"><i class="far fa-bookmark" style="font-size: 1.5rem;"></i></span>
+				</div>
+				<span style="font-size: 13px;">
+					{% for msj in mensaje %}
+						{% if noticia.id == msj.0 %}
+							<b>{{msj.1}}</b>
+						{% endif %}
+					{% endfor %}
+					{% for arr in arreglo %}
+						{% if noticia.id == arr.0 %}
+							{{ arr.1 }}
+						{% endif %}
+					{% endfor %}
+				</span><br>
+				<span style="font-size: 12px;">
+					{% for cmt in comentario %}
+						{% if noticia.id == cmt.0 %}
+							<form action="{% url 'borrar_comentarios' %}" method="POST">
+								{% csrf_token %}
+								<input type="hidden" name="comentario_id" value="{{ cmt.3 }}">
+								<b>{{ cmt.1 }}: </b>{{ cmt.2 }}
+								{% if cmt.1 == noticia.usuario.nombre_completo %}
+									<button type="submit" class="btn btn-sm btn-danger float-right" style="font-size: 5px;">-</button>
+								{% endif %}<br>
+							</form>
+						{% endif %}
+					{% endfor %}
+				</span><br>
+				<form action="{% url 'comentarios' %}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="publicacion" value="{{ noticia.id }}">
+					<input type="text" name="comentario" class="form-control form-control-sm comentario{{ noticia.id }}" style="height: 40px; font-size: 10px;" placeholder="Dejar un comentario...">
+				</form>
+				<span style="font-size: 11px;">{{ noticia.fecha_creacion }}</span>
+			</div>
+		</div><br>
+		{% endfor %}	
+	</div>
+</div>
+ {% endblock %}

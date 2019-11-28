@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block head_content %}
+<title>Crear Nueva Publicaci&oacute;n</title>
+{% endblock %}
+{% block container %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-6 pt-3 pb-3" id="profile-box">
+                <h4 class="mb-4">Nueva Foto!</h4>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <select name="tipo" class="form-control" required="">
+                        <option value="1">Publicaci&oacute;n</option>
+                        <option value="2">Historia</option>
+                    </select>
+                    <label style="margin-top: 15px">Seleccionar Foto:</label>
+                    <input class="form-control" type="file" name="imagen" required=""/>
+        
+                    <input class="form-control" type="text" name="mensaje" style="margin-top: 15px" required="" placeholder="Mensaje" />
+                    <button type="submit" class="btn btn-primary btn-block mt-5">Publicar!</button>
+                    <a href="{% url 'perfil' %}" class="btn btn-success btn-block mt-2">Regresar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
